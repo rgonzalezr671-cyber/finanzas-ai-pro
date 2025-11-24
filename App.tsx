@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Transaction, FinancialSummary } from './types';
-import TransactionForm from './components/TransactionForm';
-import TransactionList from './components/TransactionList';
-import FinancialCharts from './components/FinancialCharts';
+import TransactionForm from './TransactionForm';
+import TransactionList from './TransactionList';
+import FinancialCharts from './FinancialCharts';
 import AiAdvisor from './components/AiAdvisor';
 import { Wallet, TrendingUp, TrendingDown, Trash2, AlertTriangle, FileSpreadsheet } from 'lucide-react';
 import * as XLSX from 'xlsx';
