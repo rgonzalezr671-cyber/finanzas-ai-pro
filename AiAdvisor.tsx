@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, RefreshCw, Clock } from 'lucide-react';
 
-import ReactMarkdown from 'react-markdown';
+import { FinancialSummary, Transaction } from '../types';
 // import { getFinancialAdvice } from '../services/geminiservice';
 interface AiAdvisorProps {
   summary: FinancialSummary;
