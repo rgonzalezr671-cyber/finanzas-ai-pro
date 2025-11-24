@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, RefreshCw, Clock } from 'lucide-react';
-import { getFinancialAdvice } from '../services/geminiService';
+
 import ReactMarkdown from 'react-markdown';
 // import { getFinancialAdvice } from '../services/geminiservice';
 interface AiAdvisorProps {
