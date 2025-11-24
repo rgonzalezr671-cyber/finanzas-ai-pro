@@ -12,7 +12,7 @@ import {
   Cell,
   Legend
 } from 'recharts';
-import { FinancialSummary } from '../types';
+import { FinancialSummary, Transaction } from '../types';
 import { PieChart as PieIcon, BarChart as BarIcon } from 'lucide-react';
 
 interface FinancialChartsProps {
