@@ -3,7 +3,7 @@ import { Transaction, FinancialSummary } from './types';
 import TransactionForm from './TransactionForm';
 import TransactionList from './TransactionList';
 import FinancialCharts from './FinancialCharts';
-import AiAdvisor from './components/AiAdvisor';
+import AiAdvisor from './AiAdvisor';
 import { Wallet, TrendingUp, TrendingDown, Trash2, AlertTriangle, FileSpreadsheet } from 'lucide-react';
 import * as XLSX from 'xlsx';
 
