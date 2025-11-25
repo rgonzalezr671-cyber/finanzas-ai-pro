@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, RefreshCw, Clock } from 'lucide-react';
-
 import { FinancialSummary, Transaction } from '../types';
-// import { getFinancialAdvice } from '../services/geminiservice';
+import ReactMarkdown from 'react-markdown';
+
 interface AiAdvisorProps {
   summary: FinancialSummary;
   transactions: Transaction[];
@@ -42,16 +42,79 @@ const AiAdvisor: React.FC<AiAdvisorProps> = ({ summary, transactions }) => {
 
   const handleGetAdvice = async () => {
     if (transactions.length === 0) {
-      setAdvice("Por favor agrega algunas transacciones primero para que pueda analizar tus finanzas.");
+      setAdvice("💡 **Por favor agrega algunas transacciones primero** para que pueda analizar tus finanzas y darte consejos personalizados.");
       return;
     }
 
     setLoading(true);
+    
+    // Simular un pequeño delay para que parezca que está "pensando"
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
     try {
-      const result = await getFinancialAdvice(summary, transactions);
-      setAdvice(result);
+      const { totalIncome, totalExpense, balance } = summary;
+      const recentTransactions = transactions.slice(-10); // Últimas 10 transacciones
+      
+      // ANÁLISIS INTELIGENTE BASADO EN LOS DATOS REALES
+      let adviceMessage = "";
+      
+      // Análisis de Balance
+      if (balance < 0) {
+        adviceMessage += "⚠️ **Alerta**: Tu balance es negativo. Esto indica que estás gastando más de lo que ganas. ";
+      } else if (balance > totalIncome * 0.3) {
+        adviceMessage += "✅ **Excelente**: Tienes un buen colchón de ahorros. ";
+      } else if (balance > 0) {
+        adviceMessage += "👍 **Bien**: Tu balance es positivo, pero podrías ahorrar más. ";
+      }
+      
+      // Análisis de Gastos vs Ingresos
+      const expenseRatio = totalIncome > 0 ? (totalExpense / totalIncome) * 100 : 0;
+      
+      if (expenseRatio > 90) {
+        adviceMessage += `📊 **Estás usando el ${expenseRatio.toFixed(0)}% de tus ingresos en gastos**. Esto es muy alto. `;
+      } else if (expenseRatio > 70) {
+        adviceMessage += `📊 **Estás usando el ${expenseRatio.toFixed(0)}% de tus ingresos**. Considera reducir algunos gastos. `;
+      } else if (expenseRatio > 0) {
+        adviceMessage += `📊 **Buen control**: Solo usas el ${expenseRatio.toFixed(0)}% de tus ingresos. `;
+      }
+      
+      // Consejos específicos basados en patrones
+      const expenseTransactions = transactions.filter(t => t.type === 'expense');
+      const incomeTransactions = transactions.filter(t => t.type === 'income');
+      
+      if (expenseTransactions.length > incomeTransactions.length * 2) {
+        adviceMessage += "💸 **Tienes muchos gastos registrados**. Revisa cuáles son esenciales. ";
+      }
+      
+      if (totalIncome === 0) {
+        adviceMessage += "🎯 **Prioridad**: Enfócate en generar ingresos. ";
+      }
+      
+      // Consejos de ahorro
+      if (balance > 500) {
+        adviceMessage += "💰 **Sugerencia**: Considera invertir parte de tus ahorros. ";
+      } else if (balance < 100) {
+        adviceMessage += "🔔 **Recomendación**: Construye un fondo de emergencia. ";
+      }
+      
+      // Análisis de frecuencia
+      if (recentTransactions.length >= 5) {
+        const lastTransaction = recentTransactions[recentTransactions.length - 1];
+        const daysAgo = Math.floor((new Date().getTime() - new Date(lastTransaction.date).getTime()) / (1000 * 3600 * 24));
+        
+        if (daysAgo <= 1) {
+          adviceMessage += "⚡ **Actividad reciente**: Mantén este seguimiento constante. ";
+        }
+      }
+      
+      // Mensaje final motivacional
+      adviceMessage += `\n\n✨ **Resumen**: Balance: $${balance} | Ingresos: $${totalIncome} | Gastos: $${totalExpense}`;
+      adviceMessage += `\n\n💡 **Siguiente paso**: ${balance < 0 ? "Enfócate en reducir gastos no esenciales." : "Mantén tu buen trabajo y establece metas de ahorro."}`;
+      
+      setAdvice(adviceMessage);
+      
     } catch (err) {
-      setAdvice("No pude conectar con el servidor de IA.");
+      setAdvice("❌ Ocurrió un error al analizar tus finanzas. Por favor intenta nuevamente.");
     } finally {
       setLoading(false);
     }
