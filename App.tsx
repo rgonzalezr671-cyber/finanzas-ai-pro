@@ -183,6 +183,7 @@ const App: React.FC = () => {
             </div>
             
             <div className="flex items-center gap-3">
+              {/* Botón de Exportar Excel */}
               <button
                 type="button"
                 onClick={handleExportExcel}
@@ -193,6 +194,70 @@ const App: React.FC = () => {
                 <span className="hidden sm:inline">Exportar Excel</span>
               </button>
 
+              {/* Menú de Donaciones */}
+              <div className="relative group">
+                <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg transition-all cursor-pointer border border-yellow-500/20 text-yellow-400 hover:text-yellow-300 bg-yellow-500/10 hover:bg-yellow-500/20">
+                  <span>💛 Apoyar el Proyecto</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                
+                {/* Menú Desplegable */}
+                <div className="absolute right-0 top-full mt-2 w-64 bg-dark-800 border border-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="p-3 space-y-3">
+                    {/* PayPal */}
+                    <button
+                      onClick={() => window.open('https://paypal.me/raul2510', '_blank')}
+                      className="w-full flex items-center gap-3 p-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 text-blue-400 transition-all"
+                    >
+                      <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">P</span>
+                      </div>
+                      <div className="text-left">
+                        <div className="font-medium">PayPal</div>
+                        <div className="text-xs text-gray-400">Tarjeta o transferencia</div>
+                      </div>
+                    </button>
+
+                    {/* USDT TRC20 */}
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText('THGK5x68gGqL6rZ6Gfyg8zF2vXy9kJivw9');
+                        alert('Dirección USDT (TRC20) copiada al portapapeles');
+                      }}
+                      className="w-full flex items-center gap-3 p-2 rounded-lg bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 text-green-400 transition-all"
+                    >
+                      <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">T</span>
+                      </div>
+                      <div className="text-left">
+                        <div className="font-medium">USDT (TRC20)</div>
+                        <div className="text-xs text-gray-400">Comisiones bajas</div>
+                      </div>
+                    </button>
+
+                    {/* USDC ERC20 */}
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText('0xee6d3cb8EB21372d1263C0623e9d6691A6362d47');
+                        alert('Dirección USDC (ERC20) copiada al portapapeles');
+                      }}
+                      className="w-full flex items-center gap-3 p-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 text-purple-400 transition-all"
+                    >
+                      <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">U</span>
+                      </div>
+                      <div className="text-left">
+                        <div className="font-medium">USDC (ERC20)</div>
+                        <div className="text-xs text-gray-400">Red Ethereum</div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Botón de Borrar Historial */}
               <button 
                 type="button"
                 onClick={handleClearAll}
